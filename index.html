@@ -30,6 +30,120 @@
         <section id="main-content">
           <h1>
 <a name="python_scripts" class="anchor" href="#python_scripts"><span class="octicon octicon-link"></span></a>python_scripts</h1>
+
+<p>Selection of Python Scripts written by myself.</p>
+
+<p>This can be used as learning material of example of python coding.</p>
+
+<p>The below is one of the examples use of threading.</p>
+
+<p>import requests
+import csv
+import sys
+import subprocess
+from threading import Thread
+from time import sleep</p>
+
+<p>alive_ips = []
+dead_ips = []
+threads=[]</p>
+
+<p>summary = "/stats/summary/summary.html"
+config_params = "/cgi/execAdvCom.bin?Command=85&amp;PrintMsg=Config%20Params"
+tx_monitor = "/cgi/execAdvCom.bin?Command=194&amp;PrintMsg=TxMonitor"</p>
+
+<p>def check_if_alive(ip):
+    try:
+        r = requests.get('http://'+ip+'',timeout=3)
+        #alive_ips.append(ip)
+        #print(r)
+        #print("Good ip"+ip+"")
+        alive_ips.append(ip)</p>
+
+<pre><code>except requests.exceptions.Timeout:
+    #print(requests.exceptions.Timeout)
+    #print("Error with"+ip+"")
+    dead_ips.append(ip)
+    #dead_ips.append(ip)
+    #print(dead_ips)
+    #return dead_ips
+   #print(ip)
+    #return ip
+</code></pre>
+
+<p>def get_logs_for(filename,ip,logs_type):
+    path="logs_download/"
+    r = requests.get('http://'+ip+''+logs_type+'', auth=('avanti', 'avanti'),timeout=3)
+    with open(path+filename+".html", 'wb') as fd:
+        fd.write(r.content)
+    r = ""
+    sleep(2)</p>
+
+<p>with open("device_list.csv",'r') as f:
+    reader=csv.reader(f)
+    for row in reader:
+        device = row[0]
+        ip = row[3]
+        #if check_if_alive(ip) != False:
+        t1 = Thread(target=get_logs_for, args=(device+"<em>summary",ip,summary,))
+        threads.append(t1)
+        t2 = Thread(target=get</em>logs_for, args=(device+"<em>config</em>params",ip,config_params,))
+        threads.append(t2)
+        t3 = Thread(target=get_logs_for, args=(device+"<em>tx</em>monitor",ip,tx_monitor,))
+        threads.append(t3)
+        #else:
+        # print("Connection timed out on ip: "+ip+"")</p>
+
+<p>for i in range(len(threads)):
+    try:
+        threads[i].start()
+    except requests.exceptions.Timeout:
+        print("Error with"+threads[i]+"")</p>
+
+<p>"""
+checks = []</p>
+
+<p>with open("device_list.csv",'r') as f:
+reader=csv.reader(f)
+for row in reader:
+device = row[0]
+ip = row[3]</p>
+
+<h1>
+<a name="printip" class="anchor" href="#printip"><span class="octicon octicon-link"></span></a>print(ip)</h1>
+
+<p>t4 = Thread(target=check_if_alive, args=(ip,))
+checks.append(t4)
+for i in range(len(checks)):
+sleep(0.5)
+checks[i].start()</p>
+
+<h1>
+<a name="printalive_ips" class="anchor" href="#printalive_ips"><span class="octicon octicon-link"></span></a>print(alive_ips)</h1>
+
+<p>for i in range(len(alive_ips)):
+try:
+print(alive_ips[i])
+t1 = Thread(target=get_logs_for, args=(device+"<em>summary",str(alive</em>ips[i]),summary,))
+threads.append(t1)
+t2 = Thread(target=get_logs_for, args=(device+"<em>config</em>params",str(alive_ips[i]),config_params,))
+threads.append(t2)
+t3 = Thread(target=get_logs_for, args=(device+"<em>tx</em>monitor",str(alive_ips[i]),tx_monitor,))
+threads.append(t3)
+except:
+print("Error with"+alive_ips[i]+"")</p>
+
+<p>for i in range(len(threads)):
+threads[i].start()
+sleep(2)</p>
+
+<h1>
+<a name="printcheck_if_alive1032736" class="anchor" href="#printcheck_if_alive1032736"><span class="octicon octicon-link"></span></a>print(check_if_alive("10.32.73.6"))</h1>
+
+<h1>
+<a name="printcheck_if_alive103265202" class="anchor" href="#printcheck_if_alive103265202"><span class="octicon octicon-link"></span></a>print(check_if_alive("10.32.65.202"))</h1>
+
+<p>"""</p>
         </section>
 
         <aside id="sidebar">
