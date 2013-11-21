@@ -31,8 +31,7 @@ with open("device_list.csv",'r') as f:
             get_logs_for(device+"_config_params",ip,config_params)
             get_logs_for(device+"_tx_monitor",ip,tx_monitor)
         else:
-            print("Connection timed out on ip: "+ip")
-
+            print("Connection timed out on ip: "+ip+"")
 #print(check_if_alive("10.32.73.6"))
 #print(check_if_alive("10.32.65.202"))
        
