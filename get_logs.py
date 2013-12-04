@@ -15,7 +15,7 @@ def check_if_alive(ip):
 
 def get_logs_for(filename,ip,logs_type):
     path="logs_download/"
-    r = requests.get('http://'+ip+''+logs_type+'', auth=('avanti', 'avanti'))
+    r = requests.get('http://'+ip+''+logs_type+'', auth=('xxx', 'xxx'))
     with open(path+filename+".html", 'wb') as fd:
         fd.write(r.content)
     r = ""
