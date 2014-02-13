@@ -8,12 +8,15 @@ def kml_data(filename):
     with open(filename, 'r') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
-            name = row[0]
-            kml_details.append(name)
-            long = float(row[1]) + (float(row[2]) / 60 )
-            kml_details.append(long)
-            lat = float(row[4]) + (float(row[5])/ 60 )
-            kml_details.append(lat)
+            try:
+                name = row[0]
+                kml_details.append(name)
+                long = float(row[1]) + (float(row[2]) / 60 )
+                kml_details.append(long)
+                lat = float(row[4]) + (float(row[5]) / 60 )
+                kml_details.append(lat)
+            except ValueError:
+                print("Error with: "+row[0]+"")
     return kml_details
 
 with open("kml_file.kml", 'w') as f:
